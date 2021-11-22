@@ -1,6 +1,6 @@
 # vpn-proxy
 
-A container environment to use a socks5 proxy connected to a vpn as a stepping stone when the ssh destination requires anyconnect VPN.
+A container environment to use a socks5 proxy connected to a vpn as a jump server when the ssh destination requires anyconnect VPN.
 
 ```bash
 cp .env.sample .env
