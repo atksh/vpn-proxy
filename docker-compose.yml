@@ -1,0 +1,19 @@
+version: '3.8'
+services:
+  vpn:
+    build:
+      context: .
+    restart: always
+    tty: true
+    ports:
+      - 1081:1081
+      - 3389:3389
+    env_file: ./.env
+    privileged: true
+    healthcheck:
+      test: ["CMD-SHELL", "ping $ANYCONNECT_SERVER -w 5"]
+      interval: 15s
+      timeout: 10s
+      retries: 3
+      start_period: 15s
+
