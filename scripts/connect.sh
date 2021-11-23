@@ -16,5 +16,4 @@ echo "Tunnel is ready!"
 
 socat -d TCP4-LISTEN:3389,fork TCP4:$JUMP1:3389 &
 socat -d TCP4-LISTEN:3390,fork TCP4:$JUMP2:3389 &
-
-/bin/bash
+wait
