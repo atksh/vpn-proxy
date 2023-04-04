@@ -6,7 +6,6 @@ services:
     restart: always
     ports:
       - 1081:1081
-      - 3389:3389
     env_file: .env
     healthcheck:
       test: ["CMD-SHELL", "ping $HEALTHCHECK_TARGET_SERVER -w 5"]
