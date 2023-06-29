@@ -1,7 +1,7 @@
 FROM debian:bookworm
 
-RUN apt-get update \
-    && apt-get install -y \
+RUN apt-get update -o Acquire::AllowInsecureRepositories=true 
+RUN apt-get install -y \
     openconnect \
     iptables \
     expect \

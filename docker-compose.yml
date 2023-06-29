@@ -1,21 +1,30 @@
 version: '3.8'
 services:
-  vpn:
+  vpn_1:
+    build:
+      context: .
+    restart: always
+    ports:
+      - 1080:1081
+    env_file: .env1
+    privileged: true
+    deploy:
+      resources:
+        limits:
+          cpus: '2'
+          memory: 512M 
+    platform: linux/arm64/v8
+  vpn_2:
     build:
       context: .
     restart: always
     ports:
       - 1081:1081
-    env_file: .env
-    healthcheck:
-      test: ["CMD-SHELL", "ping $HEALTHCHECK_TARGET_SERVER -w 5"]
-      interval: 30s
-      timeout: 5s
-      retries: 5
-      start_period: 30s
+    env_file: .env2
     privileged: true
     deploy:
       resources:
         limits:
-          cpus: '0.5'
-          memory: 128M
+          cpus: '2'
+          memory: 512M 
+    platform: linux/arm64/v8
