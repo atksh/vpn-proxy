@@ -9,3 +9,6 @@ cp .env2.sample .env2
 vim .env2  # replace placeholders w/ ur credentials
 docker-compose up -d
 ```
+
+
+Note that the .env1 is for localhost:1080 and .env2 is for localhost:1081 of the socks5 proxy running on your machine.
