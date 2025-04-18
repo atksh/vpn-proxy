@@ -8,6 +8,12 @@ services:
       - 1080:1081
     env_file: .env1
     privileged: true
+    healthcheck:
+      test: ["CMD-SHELL", "ping 10.101.247.150 -w 5"]
+      interval: 30s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
   vpn_2:
     build:
       context: .
@@ -16,3 +22,9 @@ services:
       - 1081:1081
     env_file: .env2
     privileged: true
+    healthcheck:
+      test: ["CMD-SHELL", "ping 172.16.24.200 -w 5"]
+      interval: 30s
+      timeout: 5s
+      retries: 5
+      start_period: 30s

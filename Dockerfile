@@ -16,6 +16,4 @@ RUN chmod +x /root/connect.sh
 
 ADD scripts/danted.conf /etc/danted.conf
 
-EXPOSE 1081 3389
-
 CMD ["/root/connect.sh"]
