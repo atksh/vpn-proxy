@@ -4,6 +4,7 @@ RUN apt-get update -o Acquire::AllowInsecureRepositories=true
 RUN apt-get install -y \
     openconnect \
     iptables \
+    iproute2 \
     expect \
     dante-server \
     socat \

@@ -3,3 +3,6 @@ ANYCONNECT_PASSWORD={{password}}
 ANYCONNECT_SERVER={{vpn server ip}}
 CERT=pin-sha256:{{vpn server cert. hash}}
 HEALTHCHECK_TARGET_SERVER={{target server ip for healthcheck}}
+# Optional: uncomment to enable static RDP port forwarding
+JUMP1={{remote target for local 3389}}
+JUMP2={{remote target for local 3390}}
