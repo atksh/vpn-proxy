@@ -2,8 +2,8 @@
 set -euo pipefail
 
 # Continually establish the AnyConnect VPN and ensure the SOCKS5 proxy stays
-# available.  If the VPN connection drops for any reason, all dependent
-# processes (danted & optional socat forwarders) will be restarted.
+# available.  If the VPN connection drops for any reason, dependent
+# processes (openconnect & danted) will be restarted automatically.
 
 start_vpn() {
   local pidfile=/var/run/openconnect.pid
@@ -59,27 +59,9 @@ start_dante() {
   echo "Started Dante SOCKS5 server (pid=$DANTE_PID)."
 }
 
-start_forwards() {
-  SOCAT_PIDS=()
-  if [[ -n "${JUMP1:-}" ]]; then
-    socat -d TCP4-LISTEN:3389,fork TCP4:"$JUMP1":3389 &
-    SOCAT_PIDS+=("$!")
-    echo "Forwarding 3389 -> $JUMP1:3389 (pid=${SOCAT_PIDS[-1]})."
-  fi
-
-  if [[ -n "${JUMP2:-}" ]]; then
-    socat -d TCP4-LISTEN:3390,fork TCP4:"$JUMP2":3389 &
-    SOCAT_PIDS+=("$!")
-    echo "Forwarding 3390 -> $JUMP2:3389 (pid=${SOCAT_PIDS[-1]})."
-  fi
-}
-
 cleanup_children() {
   echo "Cleaning up child processes..."
   [[ -n "${DANTE_PID:-}" ]] && kill "$DANTE_PID" 2>/dev/null || true
-  for pid in "${SOCAT_PIDS[@]:-}"; do
-    kill "$pid" 2>/dev/null || true
-  done
   # Ensure tun0 is removed to avoid stale interface issues on reconnect
   ip link del tun0 2>/dev/null || true
 }
@@ -95,7 +77,6 @@ while true; do
   fi
   wait_for_tunnel
   start_dante
-  start_forwards
 
   echo "All services started. Monitoring VPN process (pid=$VPN_PID)..."
   wait "$VPN_PID" || true

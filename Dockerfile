@@ -7,7 +7,6 @@ RUN apt-get install -y \
     iproute2 \
     expect \
     dante-server \
-    socat \
     iputils-ping \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
